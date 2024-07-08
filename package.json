@@ -1,0 +1,18 @@
+{
+  "name": "mergejsfiles",
+  "version": "1.0.0",
+  "description": "合并 js 文件工具，本工具根据输入路径，扫描路径下的所有js文件，压缩并合成一个文件，根据内容计算哈希值，重命名。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tool"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^10.4.3",
+    "terser": "^5.31.1"
+  }
+}
