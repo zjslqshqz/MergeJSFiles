@@ -7,12 +7,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "tool"
+    "tool",
+    "mergejsfiles"
   ],
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "bin": {
+    "mergejsfiles": "bin/index.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "glob": "^10.4.3",
-    "terser": "^5.31.1"
+    "terser": "^5.31.1",
+    "yargs": "^17.7.2"
   }
 }
