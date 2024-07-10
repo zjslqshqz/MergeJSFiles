@@ -1,12 +1,12 @@
 {
   "options": {
-    "directoryToScan": [
-      "VC", "NewVersion", "PC", "Public", "Common", "JS", "Directive"
-    ],
+    "directoryToScan": [],
     "output": {
-      "dir": ["VC", "NewVersion", "PC", "Public", "Common", "JS", "Directive","index.min.php"],
+      "dir": [],
       "prefix": "min",
-      "suffix": "min.js"
+      "suffix": "min.js",
+      "writeBootFile": true,
+      "bootFileAddress": []
     },
     "maxFileSize": 102400
   },
