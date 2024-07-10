@@ -1,0 +1,32 @@
+{
+  "options": {
+    "directoryToScan": [
+      "VC", "NewVersion", "PC", "Public", "Common", "JS", "Directive"
+    ],
+    "output": {
+      "dir": ["VC", "NewVersion", "PC", "Public", "Common", "JS", "Directive","index.min.php"],
+      "prefix": "min",
+      "suffix": "min.js"
+    },
+    "maxFileSize": 102400
+  },
+  "globOptions": {
+    "pattern": "**/*.js",
+    "options": {
+      "cwd": "",
+      "ignore": "**/*.min.js",
+      "nodir": true
+    }
+  },
+  "minifyOptions": {
+    "files": "",
+    "options": {
+      "compress": true,
+      "mangle": false,
+      "output": {
+        "comments": false,
+        "ascii_only": true
+      }
+    }
+  }
+}
