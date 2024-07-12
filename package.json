@@ -25,6 +25,15 @@
     "terser": "^5.31.1",
     "yargs": "^17.7.2"
   },
+  "files": [
+    "bin",
+    "example",
+    "index.js",
+    "package.json",
+    "LICENSE",
+    "MJSFOptions.template.json",
+    "README.md"
+  ],
   "os": [
     "linux",
     "darwin",
