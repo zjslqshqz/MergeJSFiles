@@ -18,6 +18,7 @@ jobs:
       - run: npm ci
 
   publish-npm:
+    environment: npm_token
     needs: build
     runs-on: ubuntu-latest
     steps:
