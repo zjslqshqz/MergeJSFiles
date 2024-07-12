@@ -1,12 +1,16 @@
 {
   "options": {
-    "directoryToScan": [],
+    "directoryToScan": [
+      "example",
+      "js"
+    ],
     "output": {
-      "dir": [],
-      "prefix": "min",
+      "dir": ["example","dist"],
+      "prefix": "main",
       "suffix": "min.js",
       "writeBootFile": true,
-      "bootFileAddress": []
+      "bootFileAddress": ["example","dist","index.php"],
+      "scriptTagSrcPrefixDir": ["example"]
     },
     "maxFileSize": 102400
   },

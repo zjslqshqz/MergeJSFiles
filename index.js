@@ -4,33 +4,21 @@ const glob = require('glob');
 const { minify } = require('terser');
 const crypto = require('crypto');
 
-module.exports = () => {
+module.exports = (config) => {
 
-    const dir = ['VC', 'NewVersion', 'PC', 'Public', 'Common', 'JS', 'Directive'];
-    const directoryToScan = path.join(...dir);
-    const phpFilePath = path.join(...dir,'index.min.php');
-    const outputDir = directoryToScan;
-    const maxFileSize = 100 * 1024;
-    const outputName = 'Directive';
-    const outputStaff = 'min.js';
+    const directoryToScan = path.join(...config.options.directoryToScan)
+    const bootFileAddress = path.join(...config.options.output.bootFileAddress);
+    const outputDir = path.join(...config.options.output.dir);
+    const maxFileSize = config.options.maxFileSize;
+    const outputNamePrefix = config.options.output.prefix;
+    const outputSuffix = config.options.output.suffix;
 
-    const pattern = '**/*.js';
-    const options = {
-        cwd: directoryToScan,
-        ignore: '**/*.min.js',
-        nodir: true,
-    };
+    const globOptions = config.globOptions.options;
+    globOptions.cwd = directoryToScan;
 
-    const minifyOptions = {
-        compress: true,
-        mangle: false,
-        output: {
-            comments: false,
-            ascii_only: true,
-        },
-    }
+    const minifyOptions = config.minifyOptions.options;
 
-    const files = glob.sync(pattern, options);
+    const files = glob.sync(config.globOptions.pattern, globOptions);
     if (files.length === 0){
         console.log('未找到 JavaScript 文件.');
         process.exit(1);
@@ -42,12 +30,12 @@ module.exports = () => {
     let currentSize = 0;
 
     if (!fs.existsSync(outputDir)) {
-        console.log('已创建输出目录.')
         fs.mkdirSync(outputDir);
+        console.log('已创建输出目录.')
     }
-    if (!fs.existsSync(phpFilePath)) {
-        console.log('已创建 PHP 引导文件.')
-        fs.writeFileSync(phpFilePath, '', { flag: 'wx' });
+    if (config.options.output.writeBootFile && !fs.existsSync(bootFileAddress)) {
+        console.log('已创建引导文件.')
+        fs.writeFileSync(bootFileAddress, '', { flag: 'wx' });
     }
 
     /**
@@ -72,11 +60,8 @@ module.exports = () => {
     const outputFilePaths = [];
 
     const generateScriptTag = (filePath) => {
-        return `<script src="${filePath}"></script>`;
-    };
-
-    const getRelativeOutputFilePath = (filePath) => {
-        return '/'+path.relative('../His/VC', filePath);
+        let src = path.join(...config.options.output.scriptTagSrcPrefixDir, filePath)
+        return `<script src="${src}"></script>`;
     };
 
     /**
@@ -87,10 +72,10 @@ module.exports = () => {
      */
     const writeFile = () => {
         // 根据当前输出内容生成哈希值，用于文件名的唯一性标识
-        const hash = createHash(currentOutput);
-
+        let hash = createHash(currentOutput);
+        let minifiedFileName = `${outputNamePrefix}-${hash}.${outputSuffix}`;
         // 构建输出文件的完整路径，包括文件名和扩展名
-        const outputFilePath = `${outputDir}/${outputName}-${hash}.${outputStaff}`;
+        let outputFilePath = path.join(outputDir,minifiedFileName);
 
         // 将当前输出内容写入到文件系统中指定的路径
         fs.writeFileSync(outputFilePath, currentOutput);
@@ -99,7 +84,7 @@ module.exports = () => {
         console.log(`压缩文件： ${outputFilePath} 已写入.`);
 
         // 将输出文件的相对路径添加到数组中，供后续使用
-        outputFilePaths.push(getRelativeOutputFilePath(outputFilePath));
+        outputFilePaths.push(minifiedFileName);
     }
 
 
@@ -130,9 +115,12 @@ module.exports = () => {
         // Write remaining content
         currentOutput && writeFile(currentOutput);
 
-        const scriptTags = outputFilePaths.map(filePath => generateScriptTag(filePath)).join('\n');
-        fs.writeFileSync(phpFilePath, scriptTags);
-        console.log(`PHP 引导文件 ${phpFilePath} 已更新。`);
+        if (config.options.output.writeBootFile){
+            const scriptTags = outputFilePaths.map(filePath => generateScriptTag(filePath)).join('\n');
+            fs.writeFileSync(bootFileAddress, scriptTags);
+            console.log(`引导文件 ${bootFileAddress} 已更新。`);
+        }
+
     })();
 
 }

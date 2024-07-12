@@ -1,0 +1,36 @@
+{
+  "options": {
+    "directoryToScan": [
+      "example",
+      "js"
+    ],
+    "output": {
+      "dir": ["example","dist"],
+      "prefix": "main",
+      "suffix": "min.js",
+      "writeBootFile": true,
+      "bootFileAddress": ["example","dist","index.php"],
+      "scriptTagSrcPrefixDir": []
+    },
+    "maxFileSize": 102400
+  },
+  "globOptions": {
+    "pattern": "**/*.js",
+    "options": {
+      "cwd": "",
+      "ignore": "**/*.min.js",
+      "nodir": true
+    }
+  },
+  "minifyOptions": {
+    "files": "",
+    "options": {
+      "compress": true,
+      "mangle": false,
+      "output": {
+        "comments": false,
+        "ascii_only": true
+      }
+    }
+  }
+}
