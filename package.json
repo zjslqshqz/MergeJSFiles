@@ -8,6 +8,7 @@
   },
   "keywords": [
     "tool",
+    "mergejs",
     "mergejsfiles"
   ],
   "engines": {
@@ -17,11 +18,24 @@
   "bin": {
     "mergejsfiles": "bin/index.js"
   },
-  "author": "",
+  "author": "zjslqshqz",
   "license": "ISC",
   "dependencies": {
     "glob": "^10.4.3",
     "terser": "^5.31.1",
     "yargs": "^17.7.2"
-  }
+  },
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zjslqshqz/MergeJSFiles.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zjslqshqz/MergeJSFiles/issues"
+  },
+  "homepage": "https://github.com/zjslqshqz/MergeJSFiles#readme"
 }

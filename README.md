@@ -1,5 +1,9 @@
 # MergeJSFiles
 
+[![npm](https://img.shields.io/node/v-lts/MergeJSFiles)](https://www.npmjs.com/package/MergeJSFiles)
+[![npm](https://img.shields.io/npm/v/MergeJSFiles)](https://www.npmjs.com/package/MergeJSFiles)
+[![npm](https://img.shields.io/npm/dw/MergeJSFiles)](https://www.npmjs.com/package/MergeJSFiles)
+
 一个简单的合并 js 文件工具，本工具根据输入路径，扫描路径下的所有js文件，简单压缩,根据最大字节，并合成一个或多个目标文件，并根据目标内容计算哈希值并重命名。
 
 ## 配置说明
