@@ -10,7 +10,7 @@
 
 查看 `MJSFOptions.template.json` 配置模版,共分三个部分：
 1. `options` 配置项，包括：
-   ```json
+   ```json5
    {
       "options": {
          "output": { // 输出相关配置
@@ -26,7 +26,7 @@
    }
    ```
 2. `globOptions` glob 配置项，
-   ```json
+   ```json5
    {
       "globOptions": {
          "pattern": ["js/**/*.js",["ext","**","*.js"]], // 支持数组地址，通过 node path 库自动拼接
