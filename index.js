@@ -6,19 +6,33 @@ const crypto = require('crypto');
 
 module.exports = (config) => {
 
-    const directoryToScan = path.join(...config.options.directoryToScan)
     const bootFileAddress = path.join(...config.options.output.bootFileAddress);
     const outputDir = path.join(...config.options.output.dir);
     const maxFileSize = config.options.maxFileSize;
     const outputNamePrefix = config.options.output.prefix;
     const outputSuffix = config.options.output.suffix;
-
-    const globOptions = config.globOptions.options;
-    globOptions.cwd = directoryToScan;
-
     const minifyOptions = config.minifyOptions.options;
 
-    const files = glob.sync(config.globOptions.pattern, globOptions);
+    const globPattern = config.globOptions.pattern;
+    if(globPattern){
+        if(typeof globPattern !== 'string'){
+            for(let i in globPattern){
+                if(typeof globPattern[i] !== 'string'){
+                    globPattern[i] = path.join(...globPattern[i])
+                }
+            }
+        }
+    }else{
+        console.log('缺少 globOptions.pattern 参数')
+        process.exit(1)
+    }
+    
+    const globOptions = config.globOptions.options;
+    if(globOptions.cwd && typeof globOptions.cwd !== 'string'){
+        globOptions.cwd = path.join(...globOptions.cwd);
+    }
+
+    const files = glob.sync(globPattern, globOptions);
     if (files.length === 0){
         console.log('未找到 JavaScript 文件.');
         process.exit(1);
@@ -89,9 +103,11 @@ module.exports = (config) => {
 
 
     (async () => {
+
         for (const file of files) {
             console.log('正在处理文件：',file);
-            const filePath = path.join(directoryToScan, file);
+            const filePath = path.join(globOptions.cwd, file);
+            console.log(filePath)
             const content = fs.readFileSync(filePath, 'utf8');
 
             try {

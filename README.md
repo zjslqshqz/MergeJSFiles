@@ -10,13 +10,32 @@
 
 查看 `MJSFOptions.template.json` 配置模版,共分三个部分：
 1. `options` 配置项，包括：
-   1. `directoryToScan` 扫描目录
-   2. `output` 输出目录
-      1. `prefix` 输出文件的前缀
-      2. `suffix` 输出文件的后缀
-      3. `writeBootFile` 是否写入引导文件
-      4. `bootFileAddress` 引导文件地址
-      5. `scriptTagSrcPrefixDir` js 标签的 src 属性前缀
-   3. `maxFileSize` 单个文件最大字节
+   ```json
+   {
+      "options": {
+         "output": { // 输出相关配置
+            "dir": ["example","dist"], // 输出目录
+            "prefix": "main", // 合并文件前缀
+            "suffix": "min.js", // 后缀
+            "writeBootFile": true, // 是否写入引导文件 比如 php
+            "bootFileAddress": ["example","dist","index.php"], // 引导文件地址
+            "scriptTagSrcPrefixDir": ["/","example"] // js src 地址前缀
+         },
+         "maxFileSize": 102400 // 合并文件最小字节
+      }
+   }
+   ```
 2. `globOptions` glob 配置项，
+   ```json
+   {
+      "globOptions": {
+         "pattern": ["js/**/*.js",["ext","**","*.js"]], // 支持数组地址，通过 node path 库自动拼接
+         "options": {
+            "cwd": ["example"], // 工作目录，默认脚本执行当前目录
+            "ignore": "", // 忽略文件
+            "nodir": true
+         }
+      }
+   }
+   ```
 3. `minifyOptions` minify 配置项
